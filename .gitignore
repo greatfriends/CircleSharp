@@ -1,0 +1,7 @@
+.vs/
+.vscode/
+.ionide/
+bin/
+obj/
+.suo
+.user
