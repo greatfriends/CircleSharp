@@ -5,13 +5,13 @@ using System.Text.Json.Serialization;
 
 namespace CircleSo.Models
 {
-  public class Prefs
+  public class MeUserPrefs
   {
     [JsonPropertyName("has_seen_welcome_popup")]
     public bool HasSeenWelcomePopup { get; set; }
   }
 
-  public class ProfileInfo
+  public class MeProfileInfo
   {
     [JsonPropertyName("website")]
     public string Website { get; set; }
@@ -35,7 +35,7 @@ namespace CircleSo.Models
     public string MakeMyEmailPublic { get; set; }
   }
 
-  public class UserInfo
+  public class Me
   {
     [JsonPropertyName("id")]
     public int Id { get; set; }
@@ -56,22 +56,22 @@ namespace CircleSo.Models
     public string TimeZone { get; set; }
 
     [JsonPropertyName("accepted_terms_at")]
-    public DateTime AcceptedTermsAt { get; set; }
+    public DateTimeOffset AcceptedTermsAt { get; set; }
 
     [JsonPropertyName("accepted_privacy_at")]
-    public DateTime AcceptedPrivacyAt { get; set; }
+    public DateTimeOffset AcceptedPrivacyAt { get; set; }
 
     [JsonPropertyName("admin")]
     public object Admin { get; set; }
 
     [JsonPropertyName("prefs")]
-    public Prefs Prefs { get; set; }
+    public MeUserPrefs Prefs { get; set; }
 
     [JsonPropertyName("created_at")]
-    public DateTime CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 
     [JsonPropertyName("updated_at")]
-    public DateTime UpdatedAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
 
     [JsonPropertyName("headline")]
     public string Headline { get; set; }
@@ -83,7 +83,7 @@ namespace CircleSo.Models
     public int CommentsCount { get; set; }
 
     [JsonPropertyName("profile_info")]
-    public ProfileInfo ProfileInfo { get; set; }
+    public MeProfileInfo ProfileInfo { get; set; }
 
     [JsonPropertyName("public_uid")]
     public string PublicUid { get; set; }
@@ -95,13 +95,13 @@ namespace CircleSo.Models
     public string AffiliateRef { get; set; }
 
     [JsonPropertyName("password_confirmed_at")]
-    public DateTime PasswordConfirmedAt { get; set; }
+    public DateTimeOffset? PasswordConfirmedAt { get; set; }
 
     [JsonPropertyName("password_confirmation_sent_at")]
-    public object PasswordConfirmationSentAt { get; set; }
+    public DateTimeOffset? PasswordConfirmationSentAt { get; set; }
 
     [JsonPropertyName("password_set_at")]
-    public DateTime PasswordSetAt { get; set; }
+    public DateTimeOffset? PasswordSetAt { get; set; }
 
     [JsonPropertyName("terms_of_service")]
     public object TermsOfService { get; set; }

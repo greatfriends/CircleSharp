@@ -2,11 +2,34 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>CircleSharp</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>GreatFriends</Authors>
+    <Product>CircleSharp</Product>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/greatfriends/CircleSharp</PackageProjectUrl>
+    <Description>Wrapper of Circle.so API (v1)</Description>
+    <Copyright>(c) 2020 Suthep Sangvirotjanaphat</Copyright>
+    <PackageIcon>circle-sharp-logo.png</PackageIcon>
+    <RepositoryUrl>https://github.com/greatfriends/CircleSharp</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
     <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.11.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="images\circle-sharp-logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
