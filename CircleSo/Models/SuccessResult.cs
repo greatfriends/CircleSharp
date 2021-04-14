@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CircleSharp.Models
 { 
-  public class DeleteSpaceResult 
+  public class SuccessResult 
   {
     [JsonProperty("success")]
     public bool Success { get; set; }

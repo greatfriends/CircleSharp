@@ -27,10 +27,14 @@ Console.WriteLine(me.FirstName);
 ## Spaces
 - GetSpaces(spaceGroupId, [communityId], [sort="oldest"])
 - GetSpace(spaceId, communityId)
-- CreateSpace(spaceGroupId, communityId, name, slug, - ate, isHidden, isHiddenFromNonMember, isPostDisabled)
+- CreateSpace(spaceGroupId, communityId, name, slug, 
+  isPrivate, isHidden, isHiddenFromNonMember, isPostDisabled)
 - DeleteSpace(spaceId, [forceDeleteNonEmptySpace=false])
 
 ## Members
-- InviteMember(communityId, email, [name=null], - Id=null])
+- InviteMember(communityId, email, [name=null], [spaceIds...])
 - GetUsers(communityId, [sort="latest"])
 - GetUser(userId, [communityId])
+- AddMemberToSpace(email, spaceId, [communityId])
+- RemoveMemberFromSpace(email, spaceId, [communityId])
+- DirectMessage(email, messageBody, [communityId])

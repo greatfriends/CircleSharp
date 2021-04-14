@@ -52,7 +52,7 @@ namespace CircleSharp
 
       if (response.Data.Id == 0)
       {
-        var err = JsonConvert.DeserializeObject<ErrorInfo>(response.Content);
+        var err = JsonConvert.DeserializeObject<StatusResult>(response.Content);
         throw new Exception($"{err.Status}: {err.Message}");
       }
 
@@ -68,7 +68,7 @@ namespace CircleSharp
 
       if (response.Data.Count == 0)
       {
-        var err = JsonConvert.DeserializeObject<ErrorInfo>(response.Content);
+        var err = JsonConvert.DeserializeObject<StatusResult>(response.Content);
         throw new Exception($"{err.Status}: {err.Message}");
       }
 
@@ -90,7 +90,7 @@ namespace CircleSharp
 
       if (response.Data.Count == 0)
       {
-        var err = JsonConvert.DeserializeObject<ErrorInfo>(response.Content);
+        var err = JsonConvert.DeserializeObject<StatusResult>(response.Content);
         throw new Exception($"{err.Status}: {err.Message}");
       }
 
@@ -109,7 +109,7 @@ namespace CircleSharp
 
       if (response.Data.Id == 0)
       {
-        var err = JsonConvert.DeserializeObject<ErrorInfo>(response.Content);
+        var err = JsonConvert.DeserializeObject<StatusResult>(response.Content);
         throw new Exception($"{err.Status}: {err.Message}");
       }
 
@@ -151,7 +151,6 @@ namespace CircleSharp
       return result;
     }
 
-
     public Space GetSpace(int spaceId, int? communityId = null)
     {
       var client = new RestClient($"{host}/api/v1/spaces/{spaceId}");
@@ -170,7 +169,7 @@ namespace CircleSharp
           throw new Exception(response.ErrorMessage);
         }
 
-        var err = JsonConvert.DeserializeObject<ErrorInfo>(response.Content);
+        var err = JsonConvert.DeserializeObject<StatusResult>(response.Content);
         if (err != null)
           throw new Exception($"{err.Status}: {err.Message}");
       }
@@ -204,14 +203,14 @@ namespace CircleSharp
       return response.Data;
     }
 
-    public DeleteSpaceResult DeleteSpace(int spaceId, bool forceDeleteNonEmptySpace = false)
+    public SuccessResult DeleteSpace(int spaceId, bool forceDeleteNonEmptySpace = false)
     {
       try
       {
         var space = GetSpace(spaceId);
         if (!forceDeleteNonEmptySpace && space.PostIds.Count > 0)
         {
-          return new DeleteSpaceResult
+          return new SuccessResult
           {
             Success = false,
             Message = "This space is not empty"
@@ -221,20 +220,20 @@ namespace CircleSharp
         var client = new RestClient($"{host}/api/v1/spaces/{spaceId}");
         var request = CreateRequestWithAuth(Method.DELETE);
 
-        var response = client.Execute<DeleteSpaceResult>(request);
+        var response = client.Execute<SuccessResult>(request);
         return response.Data;
       }
       catch (Exception ex)
       {
-        return new DeleteSpaceResult
+        return new SuccessResult
         {
           Success = false,
           Message = ex?.Message
         };
       }
     }
-
-    public InvitationResult InviteMember(int communityId, string email, string name = null, int? spaceId = null)
+     
+    public InvitationResult InviteMember(int communityId, string email, string name = null, params int[] spaceIds)
     {
       var client = new RestClient($"{host}/api/v1/community_members");
       var request = CreateRequestWithAuth(Method.POST);
@@ -249,8 +248,11 @@ namespace CircleSharp
         request.AddQueryParameter("name", name);
       }
 
-      if (spaceId != null)
-        request.AddQueryParameter("space_ids[]", spaceId.ToString());
+      if (spaceIds != null)
+      {
+        var jsonSpaceIds = JsonConvert.SerializeObject(spaceIds);
+        request.AddQueryParameter("space_ids[]", jsonSpaceIds);
+      }
 
       var response = client.Execute<InvitationResult>(request);
 
@@ -263,14 +265,14 @@ namespace CircleSharp
       var client = new RestClient($"{host}/api/v1/community_members/{userId}");
       var request = CreateRequestWithAuth();
 
-      if (communityId != null) 
+      if (communityId != null)
         request.AddQueryParameter("community_id", communityId.ToString());
 
       var response = client.Execute<User>(request);
 
       if (response.Data.Id == 0)
       {
-        var err = JsonConvert.DeserializeObject<ErrorInfo>(response.Content);
+        var err = JsonConvert.DeserializeObject<StatusResult>(response.Content);
         throw new Exception($"{err.Status}: {err.Message}");
       }
 
@@ -294,7 +296,7 @@ namespace CircleSharp
       request.AddQueryParameter("per_page", maxPerPage.ToString());
       request.AddQueryParameter("page", page.ToString());
       request.AddQueryParameter("sort", sort);
-       
+
       var result = new List<User>();
       IRestResponse<List<User>> response;
 
@@ -309,7 +311,51 @@ namespace CircleSharp
       return result;
     }
 
-    //
+    public SuccessResult AddMemberToSpace(string email, int spaceId, int? communityId = null)
+    {
+      var client = new RestClient($"{host}/api/v1/space_members");
+      var request = CreateRequestWithAuth(Method.POST);
+
+      request.AddQueryParameter("email", email);
+      request.AddQueryParameter("space_id", spaceId.ToString());
+
+      if (communityId != null)
+        request.AddQueryParameter("community_id", communityId.ToString());
+
+      var response = client.Execute<SuccessResult>(request);
+      return response.Data;
+    }
+
+    public SuccessResult RemoveMemberFromSpace(string email, int spaceId, int? communityId = null)
+    {
+      var client = new RestClient($"{host}/api/v1/space_members");
+      var request = CreateRequestWithAuth(Method.DELETE);
+
+      request.AddQueryParameter("email", email);
+      request.AddQueryParameter("space_id", spaceId.ToString());
+
+      if (communityId != null)
+        request.AddQueryParameter("community_id", communityId.ToString());
+
+      var response = client.Execute<SuccessResult>(request);
+      return response.Data;
+    }
+
+    public DirectMessageResult DirectMessage(string email, string messageBody, int? communityId = null)
+    {
+      var client = new RestClient($"{host}/api/v1/messages");
+      var request = CreateRequestWithAuth(Method.DELETE);
+
+      request.AddQueryParameter("user_email", email);
+      request.AddQueryParameter("message_body", messageBody);
+
+      if (communityId != null)
+        request.AddQueryParameter("community_id", communityId.ToString());
+
+      var response = client.Execute<DirectMessageResult>(request);
+      return response.Data;
+    }
+     
     private RestRequest CreateRequestWithAuth(Method method = Method.GET)
     {
       var request = new RestRequest(method);

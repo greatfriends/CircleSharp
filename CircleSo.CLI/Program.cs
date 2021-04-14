@@ -15,6 +15,7 @@ namespace CircleSharp.CLI
     private static int SpaceGroup_12;
     private static int SpaceGroup_21;
     private static int Space_11a;
+    private static int Space_11b;
     private static int User_1a;
     private static IConfiguration config;
 
@@ -27,6 +28,7 @@ namespace CircleSharp.CLI
       SpaceGroup_12 = int.Parse(config["Ids:SpaceGroup_12"]);
       SpaceGroup_21 = int.Parse(config["Ids:SpaceGroup_21"]);
       Space_11a = int.Parse(config["Ids:Space_11a"]);
+      Space_11b = int.Parse(config["Ids:Space_11b"]);
       User_1a = int.Parse(config["Ids:User_1a"]); 
 
       try
@@ -40,10 +42,10 @@ namespace CircleSharp.CLI
         //Do_Spaces(c);
         //Do_Space(c);
 
-        Do_CreateSpace(c);
+        //Do_CreateSpace(c);
         //Do_DeleteSpace(c);
 
-        //Do_Invitation(c);
+        Do_Invitation(c);
         //Do_GetUsers(c);
         //Do_GetUser(c);
       }
@@ -72,7 +74,7 @@ namespace CircleSharp.CLI
       var result = c.InviteMember(Community_1,
         $"user.{ms}@gfbd.co.th",
         null,
-        Space_11a);
+        Space_11a, Space_11b);
 
       Dump(result);
     }
