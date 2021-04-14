@@ -5,3 +5,6 @@ bin/
 obj/
 .suo
 .user
+
+# Private used batch file
+_*.bat
