@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CircleSo.Models
+namespace CircleSharp.Models
 { 
   public class DeleteSpaceResult 
   {

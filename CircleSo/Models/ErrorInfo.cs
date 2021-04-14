@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace CircleSo.Models
+namespace CircleSharp.Models
 {
   public class ErrorInfo
   { 

@@ -1,4 +1,4 @@
-﻿using CircleSo.Models;
+﻿using CircleSharp.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RestSharp;
@@ -7,10 +7,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace CircleSo
+namespace CircleSharp
 {
   public class CircleNet
   {
+    private const string HostIsRequired = "'CircleNet:host' is required in configuration.";
+    private const string TokenIsRequired = "'CircleNet:token' is required in configuration.";
+
     private readonly string host;
     private readonly string token;
 
@@ -27,8 +30,17 @@ namespace CircleSo
       host = config["CircleNet:host"];
       token = config["CircleNet:token"];
 
-      if (string.IsNullOrEmpty(host)) throw new InvalidOperationException("'CircleNet:host' is required in configuration.");
-      if (string.IsNullOrEmpty(token)) throw new InvalidOperationException("'CircleNet:token' is required in configuration.");
+      if (string.IsNullOrEmpty(host)) throw new InvalidOperationException(HostIsRequired);
+      if (string.IsNullOrEmpty(token)) throw new InvalidOperationException(TokenIsRequired);
+    }
+
+    public CircleNet(string host, string token)
+    {
+      this.host = host;
+      this.token = token;
+
+      if (string.IsNullOrEmpty(host)) throw new InvalidOperationException(HostIsRequired);
+      if (string.IsNullOrEmpty(token)) throw new InvalidOperationException(TokenIsRequired);
     }
 
     public Me GetMe()
@@ -166,12 +178,13 @@ namespace CircleSo
       return response.Data;
     }
 
-    public CreateSpaceResult CreateSpace(int communityId, string name, string slug,
+    public CreateSpaceResult CreateSpace(int spaceGroupId, int communityId, string name, string slug,
       bool isPrivate, bool isHidden, bool isHiddenFromNonMember, bool isPostDiabled)
     {
       var client = new RestClient($"{host}/api/v1/spaces");
       var request = CreateRequestWithAuth(Method.POST);
 
+      request.AddQueryParameter("space_group_id", spaceGroupId.ToString());
       request.AddQueryParameter("community_id", communityId.ToString());
       request.AddQueryParameter("name", name);
       request.AddQueryParameter("slug", slug);
@@ -254,6 +267,12 @@ namespace CircleSo
         request.AddQueryParameter("community_id", communityId.ToString());
 
       var response = client.Execute<User>(request);
+
+      if (response.Data.Id == 0)
+      {
+        var err = JsonConvert.DeserializeObject<ErrorInfo>(response.Content);
+        throw new Exception($"{err.Status}: {err.Message}");
+      }
 
       return response.Data;
     }

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json; 
 using System.Collections.Generic; 
 
-namespace CircleSo.Models
+namespace CircleSharp.Models
 { 
   public class CommunityPrefs
   {

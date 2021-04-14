@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic; 
 
-namespace CircleSo.Models
+namespace CircleSharp.Models
 {
   public class SpaceGroup 
   {

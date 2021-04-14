@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace CircleSo.CLI
+namespace CircleSharp.CLI
 {
   class Program
   {
@@ -12,6 +12,7 @@ namespace CircleSo.CLI
     private static int Community_1;
     private static int Community_2;
     private static int SpaceGroup_11;
+    private static int SpaceGroup_12;
     private static int SpaceGroup_21;
     private static int Space_11a;
     private static int User_1a;
@@ -23,6 +24,7 @@ namespace CircleSo.CLI
       Community_1 = int.Parse(config["Ids:Community_1"]);
       Community_2 = int.Parse(config["Ids:Community_2"]);
       SpaceGroup_11 = int.Parse(config["Ids:SpaceGroup_11"]);
+      SpaceGroup_12 = int.Parse(config["Ids:SpaceGroup_12"]);
       SpaceGroup_21 = int.Parse(config["Ids:SpaceGroup_21"]);
       Space_11a = int.Parse(config["Ids:Space_11a"]);
       User_1a = int.Parse(config["Ids:User_1a"]); 
@@ -38,12 +40,12 @@ namespace CircleSo.CLI
         //Do_Spaces(c);
         //Do_Space(c);
 
-        //Do_CreateSpace(c);
+        Do_CreateSpace(c);
         //Do_DeleteSpace(c);
 
         //Do_Invitation(c);
         //Do_GetUsers(c);
-        Do_GetUser(c);
+        //Do_GetUser(c);
       }
       catch (Exception ex)
       {
@@ -84,7 +86,7 @@ namespace CircleSo.CLI
     private static void Do_CreateSpace(CircleNet c)
     {
       int ms = DateTime.Now.Millisecond;
-      var result = c.CreateSpace(Community_1,
+      var result = c.CreateSpace(SpaceGroup_12, Community_1,
         $"Test Space {ms}", $"test-space-{ms}",
         true, true, true, true);
       Dump(result);
