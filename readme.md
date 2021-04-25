@@ -1,8 +1,10 @@
 # CircleSharp
+
 A .net wrapper for Circle.so API (v1)
 
-# How to use 
-```cs
+## How to use 
+
+```c#
 using CircleSharp;
 
 ...
@@ -12,28 +14,35 @@ var me = c.GetMe();
 Console.WriteLine(me.FirstName);
 ```
 
-# CircleNet Methods
-## Me
+## CircleNet Methods
+
+### Me
+
 - GetMe()
 
-## Communities 
+### Communities
+
 - GetCommunities()
 - GetCommunity(id)
 
-## Space Groups
+### Space Groups
+
 - GetSpaceGroups([communityId])
 - GetSpaceGroup(spaceGroupId, [communityId])
 
-## Spaces
+### Spaces
+
 - GetSpaces(spaceGroupId, [communityId], [sort="oldest"])
 - GetSpace(spaceId, communityId)
 - CreateSpace(spaceGroupId, communityId, name, slug, 
   isPrivate, isHidden, isHiddenFromNonMember, isPostDisabled)
 - DeleteSpace(spaceId, [forceDeleteNonEmptySpace=false])
 
-## Members
+### Members
+
 - InviteMember(communityId, email, [name=null], [spaceIds...])
 - GetUsers(communityId, [sort="latest"])
+- GetUsersBySpace(spaceId, [sort="latest"])
 - GetUser(userId, [communityId])
 - AddMemberToSpace(email, spaceId, [communityId])
 - RemoveMemberFromSpace(email, spaceId, [communityId])

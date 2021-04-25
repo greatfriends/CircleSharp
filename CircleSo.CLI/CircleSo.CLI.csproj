@@ -3,11 +3,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>f0f2192e-90ff-4134-af79-54470cc965a3</UserSecretsId>
-    <Version>0.1.1</Version>
-    <FileVersion>0.1.1</FileVersion>
-    <AssemblyVersion>0.1.1</AssemblyVersion>
-    <PackageVersion>0.1.1</PackageVersion>
-    <InformationVersion>0.1.1</InformationVersion>
+    <Version>0.1.3</Version>
+    <FileVersion>0.1.3</FileVersion>
+    <AssemblyVersion>0.1.3</AssemblyVersion>
+    <PackageVersion>0.1.3</PackageVersion>
+    <InformationVersion>0.1.3</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />

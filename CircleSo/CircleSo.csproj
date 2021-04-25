@@ -3,22 +3,22 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>CircleSharp</PackageId>
-    <Version>0.1.1</Version>
+    <Version>0.1.3</Version>
     <Authors>GreatFriends</Authors>
     <Product>CircleSharp</Product>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/greatfriends/CircleSharp</PackageProjectUrl>
     <Description>Wrapper of Circle.so API (v1)</Description>
-    <Copyright>(c) 2020 Suthep Sangvirotjanaphat</Copyright>
+    <Copyright>(c) 2021 Suthep Sangvirotjanaphat</Copyright>
     <PackageIcon>circle-sharp-logo.png</PackageIcon>
     <RepositoryUrl>https://github.com/greatfriends/CircleSharp</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <RootNamespace>CircleSharp</RootNamespace>
     <AssemblyName>CircleSharp</AssemblyName>
-    <FileVersion>0.1.1</FileVersion>
-    <AssemblyVersion>0.1.1</AssemblyVersion>
-    <PackageVersion>0.1.1</PackageVersion>
-    <InformationVersion>0.1.1</InformationVersion>
+    <FileVersion>0.1.3</FileVersion>
+    <AssemblyVersion>0.1.3</AssemblyVersion>
+    <PackageVersion>0.1.3</PackageVersion>
+    <InformationVersion>0.1.3</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />

@@ -259,24 +259,36 @@ namespace CircleSharp
       return response.Data;
     }
 
-    public User GetUser(int userId, int? communityId = null)
+    public List<User> GetUsersBySpace(int spaceId, string sort = "latest")
     {
-
-      var client = new RestClient($"{host}/api/v1/community_members/{userId}");
-      var request = CreateRequestWithAuth();
-
-      if (communityId != null)
-        request.AddQueryParameter("community_id", communityId.ToString());
-
-      var response = client.Execute<User>(request);
-
-      if (response.Data.Id == 0)
+      string[] sorts = new[] { "oldest", "latest", "active" };
+      if (!sorts.Contains(sort))
       {
-        var err = JsonConvert.DeserializeObject<StatusResult>(response.Content);
-        throw new Exception($"{err.Status}: {err.Message}");
+        throw new ArgumentException($"sort must be in '{string.Join(',', sorts)}' only.", nameof(sort));
       }
 
-      return response.Data;
+      var client = new RestClient($"{host}/api/v1/community_members");
+      var request = CreateRequestWithAuth();
+
+      int page = 1;
+      int maxPerPage = 60;
+      request.AddQueryParameter("space_id", spaceId.ToString());
+      request.AddQueryParameter("per_page", maxPerPage.ToString());
+      request.AddQueryParameter("page", page.ToString());
+      request.AddQueryParameter("sort", sort);
+
+      var result = new List<User>();
+      IRestResponse<List<User>> response;
+
+      do
+      {
+        response = client.Execute<List<User>>(request);
+        result.AddRange(response.Data);
+
+        request.AddOrUpdateParameter("page", (++page).ToString());
+      } while (response.Data.Count > 0);
+
+      return result;
     }
 
     public List<User> GetUsers(int communityId, string sort = "latest")
@@ -309,6 +321,26 @@ namespace CircleSharp
       } while (response.Data.Count > 0);
 
       return result;
+    }
+
+    public User GetUser(int userId, int? communityId = null)
+    {
+
+      var client = new RestClient($"{host}/api/v1/community_members/{userId}");
+      var request = CreateRequestWithAuth();
+
+      if (communityId != null)
+        request.AddQueryParameter("community_id", communityId.ToString());
+
+      var response = client.Execute<User>(request);
+
+      if (response.Data.Id == 0)
+      {
+        var err = JsonConvert.DeserializeObject<StatusResult>(response.Content);
+        throw new Exception($"{err.Status}: {err.Message}");
+      }
+
+      return response.Data;
     }
 
     public SuccessResult AddMemberToSpace(string email, int spaceId, int? communityId = null)

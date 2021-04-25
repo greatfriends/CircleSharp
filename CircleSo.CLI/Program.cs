@@ -45,7 +45,7 @@ namespace CircleSharp.CLI
         //Do_CreateSpace(c);
         //Do_DeleteSpace(c);
 
-        Do_Invitation(c);
+        //Do_Invitation(c);
         //Do_GetUsers(c);
         //Do_GetUser(c);
       }
