@@ -1,4 +1,6 @@
-# CircleSharp
+# CircleSharp 
+[![NuGet version](https://img.shields.io/nuget/v/CircleSharp.svg?style=flat&logo=nuget&color=informational)](https://www.nuget.org/packages/CircleSharp/) 
+[![Nuget download](https://img.shields.io/nuget/dt/CircleSharp?color=red&logo=sss&style=social)](https://www.nuget.org/packages/CircleSharp/) 
 
 A .net wrapper for Circle.so API (v1)
 
